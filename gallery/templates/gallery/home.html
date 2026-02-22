@@ -1,0 +1,25 @@
+{% extends 'gallery/base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="hero">
+    <h1>Flight Textile</h1>
+    <p>Premium Askeri ve Hediyelik Galeri</p>
+</header>
+
+<div class="container">
+    <div class="section-title">Koleksiyonlar</div>
+    <div class="grid">
+        {% for cat in categories %}
+        <div class="card">
+            {# Placeholder image for category if we had one, for now just text #}
+            <div class="card-content" style="text-align: center; padding: 3rem;">
+                <h2 class="card-title">{{ cat.name }}</h2>
+                <a href="{% url 'category_detail' cat.slug %}"
+                    style="color: #ffd700; border-bottom: 1px solid #ffd700;">Koleksiyonu Görüntüle</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

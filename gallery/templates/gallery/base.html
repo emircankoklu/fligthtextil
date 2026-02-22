@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Textile | {% block title %}Galeri{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="layout">
+        <!-- Mobile top bar -->
+        <div class="mobile-topbar">
+            <a href="{% url 'home' %}" class="brand">Flight Textile</a>
+            <button class="hamburger" id="menuToggle" aria-label="Menüyü aç/kapat">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="brand-stack">
+                <a href="{% url 'home' %}" class="brand">Flight Textile</a>
+                <div class="brand-tagline">Premium Savunma ve Hediyelik Tekstil</div>
+            </div>
+            <nav class="nav-block">
+                <div class="nav-title">Menü</div>
+                <a class="nav-link" href="{% url 'home' %}">Ana Sayfa</a>
+            </nav>
+            <nav class="nav-block">
+                <div class="nav-title">Koleksiyonlar</div>
+                {# categories provided by views for nav #}
+                {% for cat in categories %}
+                <a class="nav-link" href="{% url 'category_detail' cat.slug %}">{{ cat.name }}</a>
+                {% endfor %}
+            </nav>
+            <div class="sidebar-cta">
+                <div>Özel üretim ve toptan talepler için</div>
+                <a class="cta-button" href="mailto:info@flighttextile.com">İletişime Geç</a>
+            </div>
+        </aside>
+
+        <!-- Overlay for mobile menu -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+            <footer class="footer">
+                &copy; 2026 Flight Textile. Tüm hakları saklıdır.
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+            menuToggle.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+            menuToggle.classList.remove('active');
+        });
+
+        // Close menu on nav link click (mobile)
+        sidebar.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('open');
+                menuToggle.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
